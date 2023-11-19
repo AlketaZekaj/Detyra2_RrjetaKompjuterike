@@ -5,7 +5,7 @@
 ## SERVERI
 
 ### Ne pjesen e serverit duhet :
-#### 1. Të vendosen variabla te cilat përmbajnë numrin e portit (numri i portit të jetë i çfarëdoshëm) dhe IP adresën;
+1. Të vendosen variabla te cilat përmbajnë numrin e portit (numri i portit të jetë i çfarëdoshëm) dhe IP adresën;
 #### 2. Të jetë në gjendje të dëgjojë (listen) të paktën të gjithë anëtaret e grupit;
 #### 3. Të pranojë kërkesat e pajisjeve që dërgojnë request (ku secili anëtarë i grupit duhet te e ekzekutoje të paktën një kërkesë në server);
 #### 4. Të jetë në gjendje të lexoj mesazhet që dërgohen nga klientët;
