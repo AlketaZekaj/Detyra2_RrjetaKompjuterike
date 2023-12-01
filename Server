@@ -49,6 +49,41 @@ namespace MultiServer
         clientSockets.Remove(current);
         return;
     } 
+    byte[] recBuf = new byte[received];
+    Array.Copy(buffer, recBuf, received);
+    string text = Encoding.ASCII.GetString(recBuf);
+    Console.WriteLine("Teksti i kthyer: " + text);
+
+    if (text.ToLower() == "admin")
+    {
+        string adminCommand = ReceiveString(current);
+        SendString(current, adminCommand);
+        HandleAdminCommands(current, adminCommand, recBuf);
+    }
+    else if (text.ToLower() == "client1" || text.ToLower() == "client2"|| text.ToLower() == "client3")
+    {
+        string clientCommand = ReceiveString(current);
+        SendString(current, clientCommand);
+        HandleClientCommands(current,clientCommand,recBuf); 
+    }
+    else
+    {
+        Console.WriteLine("Kerkesa nuk mund te realizohet");
+        byte[] data = Encoding.ASCII.GetBytes("Username eshte dhene gabim! Ju lutem provoni perseri.");
+        current.Send(data);
+
+        Console.WriteLine("Paralajmerimi u dergua");
+
+    }
+
+    current.BeginReceive(buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
+    if (!current.Connected)
+    {
+        Console.WriteLine("Klienti i diskonektuar.");
+        clientSockets.Remove(current);
+        return;
+    }
+}
 
 private static void HandleAdminCommands(Socket current, string command, byte[] buffer)
 {
