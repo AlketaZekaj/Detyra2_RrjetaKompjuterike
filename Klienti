@@ -67,4 +67,45 @@ string fileName = Console.ReadLine();
 SendString(fileName);
 ReceiveResponse();
 } 
+else if (request.ToLower() == "/lexo file") 
+{ 
+Console.Write("Shkruaj emri e file: "); 
+string fileName = Console.ReadLine(); 
+SendString(fileName); ReceiveResponse(); 
+} 
+else if (request.ToLower() == "/shkruaj ne file")
+{ 
+Console.Write("Shkruaj emri e file: "); 
+string fileName = Console.ReadLine();
+SendString(fileName);
+ReceiveResponse();
+} 
+else 
+{ 
+ReceiveResponse(); 
+} 
+} 
+else if (requestUsername.ToLower() == "client1" || requestUsername.ToLower() == "client2" || requestUsername.ToLower() == "client3")
+{ 
+Console.Write("Type your command: "); 
+string request = Console.ReadLine(); 
+SendString(request); if (request.ToLower() == "/lexo file") 
+{ 
+Console.Write("Shkruaj emri e file: "); 
+string fileName = Console.ReadLine(); 
+SendString(fileName); 
+ReceiveResponse(); 
+} 
+else if (request.ToLower() == "/exit") 
+{ 
+Exit(); 
+} else 
+{ ReceiveResponse();
+} 
+} 
+else
+{ 
+ReceiveResponse(); 
+} } }
+
 
