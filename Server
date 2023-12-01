@@ -35,5 +35,121 @@ namespace MultiServer
         }
         
 
+private static void HandleAdminCommands(Socket current, string command, byte[] buffer)
+{
+    switch(command.ToLower())
+    {
+        case "/krijo file":
+            Console.WriteLine("Kerkese per te krijuar nje file");
+            string fileName1 = ReceiveString(current);
+            Console.WriteLine("Emri i file: " + fileName1);
+            {
+                string path1 = @"C:\Users\Admin\Desktop\Computer Networks";
+                string filePath1 = Path.Combine(path1, fileName1 + ".txt");
+                using (FileStream fs = File.Create(filePath1))
+                {
+                    byte[] data2 = Encoding.ASCII.GetBytes("File u krijua me sukses!");
+                    current.Send(data2);
+                }
+    
+            }
+            break;
+        case "/fshij file":
+            Console.WriteLine("Kerkese per te fshire nje file");
+            string fileName2 = ReceiveString(current);
+            Console.WriteLine("Emri i file: " + fileName2);
+            {
+                string path2 = @"C:\Users\Admin\Desktop\Computer Networks";
+                string filePath2 = Path.Combine(path2, fileName2 + ".txt");
+                if (File.Exists(filePath2))
+                {
+                    File.Delete(filePath2);
+                    clientSockets.Clear();  
+                    byte[] data2 = Encoding.ASCII.GetBytes("File u fshi");
+                    current.Send(data2);
+                }
+                else
+                {
+                    byte[] data2 = Encoding.ASCII.GetBytes("File nuk u ekziston!");
+                    current.Send(data2);
+                }
+            }
+            break;
+        case "/lexo file":
+            Console.WriteLine("Kerkese per te lexuar ne file");
+            string fileName3 = ReceiveString(current);
+            Console.WriteLine("Emri i file: " + fileName3);
+
+            string path = @"C:\Users\Admin\Desktop\Computer Networks";
+            string filePath = Path.Combine(path, fileName3 + ".txt");
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    string readFile3 = File.ReadAllText(filePath);
+                    byte[] data3 = Encoding.ASCII.GetBytes(readFile3);
+                    current.Send(data3);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error reading file: " + ex.Message);
+                    byte[] errorData = Encoding.ASCII.GetBytes("Error reading file");
+                    current.Send(errorData);
+                }
+            }
+            else
+            {
+                byte[] data2 = Encoding.ASCII.GetBytes("File nuk u ekziston!");
+                current.Send(data2);
+            }
+            break;
+        case "/shkruaj ne file":
+            Console.WriteLine("Kerkese per te shkruar ne file");
+
+            string fileName4 = ReceiveString(current);
+            Console.WriteLine("Emri i file: " + fileName4);
+
+            string path4 = @"C:\Users\Admin\Desktop\Computer Networks";
+            string filePath4 = Path.Combine(path4, fileName4 + ".txt");
+
+            if (File.Exists(filePath4))
+            {
+                Process p = new Process();
+                ProcessStartInfo pi = new ProcessStartInfo();
+                pi.UseShellExecute = true;
+                pi.FileName = filePath4;
+                p.StartInfo = pi;
+                p.Start();
+                byte[] data4 = Encoding.ASCII.GetBytes("File u hap");
+                current.Send(data4);
+            }
+            else
+            {
+                byte[] data4 = Encoding.ASCII.GetBytes("File nuk ekziston");
+                current.Send(data4);
+            }
+            break;
+        case "/exit":
+            current.Shutdown(SocketShutdown.Both);
+            current.Close();
+            clientSockets.Remove(current);
+            Console.WriteLine("Klienti u diskonektua");
+            break;
+
+        case "/help":
+            Console.WriteLine("Kerkese per help!");
+            byte[] data5 = Encoding.ASCII.GetBytes("Komandat: /krijo file, /shkruaj ne file, /fshij file, /lexo file , /exit");
+            current.Send(data5);
+            Console.WriteLine("Paralajmerimi u dergua");
+            break;
+
+        default:
+            Console.WriteLine("Kerkesa nuk mund te realizohet");
+            byte[] data6 = Encoding.ASCII.GetBytes("Komanda e shtypur gabim! Shtyp /help per info.");
+            current.Send(data6);
+            Console.WriteLine("Paralajmerimi u dergua");
+            break;
+    }
+}
     }
 }
