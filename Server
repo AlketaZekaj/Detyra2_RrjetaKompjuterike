@@ -33,7 +33,22 @@ namespace MultiServer
             serverSocket.BeginAccept(AcceptCallback, null);
             Console.WriteLine("Server setup complete");
         }
-        
+       private static void ReceiveCallback(IAsyncResult AR)
+{
+    Socket current = (Socket)AR.AsyncState;
+    int received;
+
+    try
+    {
+        received = current.EndReceive(AR);
+    }
+    catch (SocketException)
+    {
+        Console.WriteLine("Client forcefully disconnected");
+        current.Close();
+        clientSockets.Remove(current);
+        return;
+    } 
 
 private static void HandleAdminCommands(Socket current, string command, byte[] buffer)
 {
