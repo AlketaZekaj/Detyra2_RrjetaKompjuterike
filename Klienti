@@ -37,4 +37,34 @@ namespace MultiClient
 
     }
 }
+private static void SendRequest() {
+while (true) 
+{ 
+Console.Write("Type your username: "); 
+string requestUsername = Console.ReadLine(); 
+SendString(requestUsername);
+
+if (requestUsername.ToLower() == "admin") 
+{  
+Console.Write("Type your command: "); 
+string request = Console.ReadLine(); 
+SendString(request); 
+
+if (request.ToLower() == "/exit")
+{ 
+Exit();
+} else if (request.ToLower() == "/krijo file") 
+{ 
+Console.Write("Shkruaj emri e file: "); 
+string fileName = Console.ReadLine(); 
+SendString(fileName); 
+ReceiveResponse(); 
+} 
+else if (request.ToLower() == "/fshij file") 
+{ 
+Console.Write("Shkruaj emri e file: ");
+string fileName = Console.ReadLine();
+SendString(fileName);
+ReceiveResponse();
+} 
 
