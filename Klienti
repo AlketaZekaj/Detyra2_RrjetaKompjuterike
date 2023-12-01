@@ -11,12 +11,6 @@ namespace MultiClient
             (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         private const int PORT = 100;
-        enum PermissionType
-        {
-            Read,
-            Write
-        }
-
         static void Main()
         {
             Console.Title = "Client";
