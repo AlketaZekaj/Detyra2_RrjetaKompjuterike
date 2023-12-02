@@ -84,6 +84,28 @@ namespace MultiServer
         return;
     }
 }
+private static void CloseAllSockets()
+{
+    foreach (Socket socket in clientSockets)
+    {
+        socket.Shutdown(SocketShutdown.Both);
+        socket.Close();
+    }
+
+    serverSocket.Close();
+}
+private static void AcceptCallback(IAsyncResult AR)
+{
+    Socket socket;
+
+    try
+    {
+        socket = serverSocket.EndAccept(AR);
+    }
+    catch (ObjectDisposedException)
+    {
+        return;
+    }
 
 private static void HandleAdminCommands(Socket current, string command, byte[] buffer)
 {
