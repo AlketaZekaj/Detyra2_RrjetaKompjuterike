@@ -75,8 +75,7 @@ private static void RequestLoop()
      ClientSocket.Close();
      Environment.Exit(0);
  }
-private static void SendRequest() {
-while (true) 
+private static void SendRequest() 
 { 
 Console.Write("Type your username: "); 
 string requestUsername = Console.ReadLine(); 
@@ -143,7 +142,7 @@ Exit();
 } 
 else
 { 
-ReceiveResponse(); 
+   // Thirret me ReceiveResponse(); tek SendRequest();
 } } }
 
 
