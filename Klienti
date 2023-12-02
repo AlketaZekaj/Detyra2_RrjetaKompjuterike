@@ -58,6 +58,23 @@ private static void ConnectToServer()
      Console.Clear();
      Console.WriteLine("Connected");
  }
+
+private static void RequestLoop()
+ {
+     Console.WriteLine(@"<Type '/exit' to properly disconnect >");
+     while (true)
+     {
+         SendRequest();
+         ReceiveResponse();
+     }
+ }
+ private static void Exit()
+ {
+     SendString("/exit"); // i tregojm serverit qe po bejm exit 
+     ClientSocket.Shutdown(SocketShutdown.Both);
+     ClientSocket.Close();
+     Environment.Exit(0);
+ }
 private static void SendRequest() {
 while (true) 
 { 
